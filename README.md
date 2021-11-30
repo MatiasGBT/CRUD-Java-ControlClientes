@@ -1,5 +1,5 @@
 # CRUD-Java-ControlClientes
-YouTube video: https://youtu.be/htfCpVOp9-I
+YouTube video: https://www.youtube.com/watch?v=htfCpVOp9-I&list=PLyyqbwtLymPZ2EdsJTq7qkFCAkzD5o1_A
 
 ES:
 CRUD de Control de clientes el cual incluye total de clientes y saldo total, hecho en Java con JDBC, Servlets y JSP´s siguiendo la arquitectura web y el modelo MVC (Modelo Vista Controlador).
