@@ -6,6 +6,14 @@
                     <i class="fas fa-plus"></i> Agregar cliente
                 </a>
             </div>
+            <div class="col-md-9 d-grid gap-2 mt-2 mt-md-0">
+                <form class="d-flex" action="${pageContext.request.contextPath}/ServletControlador?accion=encontrar"
+                      method="POST" class="was-validated">
+                    <input class="form-control me-2" type="search" placeholder="Buscar por nombre" aria-label="Search"
+                           name="nombre" required>
+                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
         </div>
     </div>
 </section>

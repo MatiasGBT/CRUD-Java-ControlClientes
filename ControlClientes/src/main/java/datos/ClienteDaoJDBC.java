@@ -15,6 +15,9 @@ public class ClienteDaoJDBC {
     private static final String SQL_SELECT_BY_ID = "SELECT id_cliente, nombre, apellido, email, telefono, saldo"
             + " FROM cliente WHERE id_cliente = ?";
 
+    private static final String SQL_SELECT_BY_NAME = "SELECT id_cliente, nombre, apellido, email, telefono, saldo"
+            + " FROM cliente WHERE nombre = ?";
+
     private static final String SQL_INSERT = "INSERT INTO cliente(nombre, apellido, email, telefono, saldo)"
             + " VALUES(?, ?, ?, ?, ?)";
 
@@ -85,6 +88,41 @@ public class ClienteDaoJDBC {
         return cliente;
     }
 
+    public List<Cliente> encontrarPorNombre(Cliente cliente) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Cliente> clientes = new ArrayList<>();
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_SELECT_BY_NAME);
+            stmt.setString(1, cliente.getNombre());
+            rs = stmt.executeQuery();
+            Cliente clienteNuev;
+            
+            while (rs.next()) {
+                int idCliente = rs.getInt("id_cliente");
+                String apellido = rs.getString("apellido");
+                String email = rs.getString("email");
+                String telefono = rs.getString("telefono");
+                double saldo = rs.getDouble("saldo");
+                
+                clienteNuev=new Cliente(idCliente, cliente.getNombre(), apellido,
+                email, telefono, saldo);
+
+                clientes.add(clienteNuev);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return clientes;
+    }
+
     //Este método regresara el número de registros afectados
     public int insertar(Cliente cliente) {
         //No se utiliza ResultSet puesto que no se recuperara información
@@ -133,7 +171,7 @@ public class ClienteDaoJDBC {
         }
         return cant;
     }
-    
+
     public int eliminar(Cliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;

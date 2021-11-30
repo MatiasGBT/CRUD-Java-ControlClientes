@@ -12,7 +12,7 @@
                     <i class="fas fa-check"></i> Guardar cliente
                 </button>
             </div>
-            <div class="col-md-3 d-grid gap-2">
+            <div class="col-md-3 d-grid gap-2 mt-2 mt-md-0">
                 <a href="${pageContext.request.contextPath}/ServletControlador?accion=eliminar&idCliente=${cliente.idCliente}"
                    class="btn btn-danger">
                     <i class="fas fa-trash"></i> Eliminar cliente

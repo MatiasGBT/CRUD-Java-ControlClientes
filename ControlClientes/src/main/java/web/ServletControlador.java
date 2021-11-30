@@ -3,7 +3,7 @@ package web;
 import datos.ClienteDaoJDBC;
 import dominio.Cliente;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -23,6 +23,9 @@ public class ServletControlador extends HttpServlet{
                 case "eliminar":
                     this.eliminarCliente(req, resp);
                     break;
+                case "encontrar":
+                    this.mostrarCliente(req, resp);
+                    break;
                 //La opción default reenvía a la página de inicio clientes.jsp, calculando
                 //todos los valores con el método acción default
                 default:
@@ -35,7 +38,6 @@ public class ServletControlador extends HttpServlet{
     
     private void accionDefault(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Cliente> clientes=new ClienteDaoJDBC().listar();
-        System.out.println("Clientes: " + clientes);
         HttpSession sesion=req.getSession();
         sesion.setAttribute("clientes", clientes);
         sesion.setAttribute("totalClientes", clientes.size());
@@ -71,6 +73,9 @@ public class ServletControlador extends HttpServlet{
                     break;
                 case "modificar":
                     this.modificarCliente(req, resp);
+                    break;
+                case "encontrar":
+                    this.encontrarCliente(req, resp);
                     break;
                 default:
                     this.accionDefault(req, resp);
@@ -140,5 +145,22 @@ public class ServletControlador extends HttpServlet{
         
         //Redirección hacia acción por default (para volver a mostrar la información en la pág principal)
         this.accionDefault(req, resp);
+    }
+    
+    private void encontrarCliente(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { 
+        String nombre=req.getParameter("nombre");
+        List<Cliente> clientes=new ClienteDaoJDBC().encontrarPorNombre(new Cliente(nombre));
+        req.setAttribute("clientes", clientes);
+        String jspBusqueda="/WEB-INF/paginas/cliente/busquedaCliente.jsp";
+        req.getRequestDispatcher(jspBusqueda).forward(req, resp);
+    }
+    
+    private void mostrarCliente(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int idCliente=Integer.parseInt(req.getParameter("idCliente"));
+        Cliente cliente=new Cliente(idCliente);
+        Cliente clienteFin=new ClienteDaoJDBC().encontrar(cliente);
+        req.setAttribute("cliente", clienteFin);
+        String jspBusqueda="/WEB-INF/paginas/cliente/mostrarCliente.jsp";
+        req.getRequestDispatcher(jspBusqueda).forward(req, resp);
     }
 }

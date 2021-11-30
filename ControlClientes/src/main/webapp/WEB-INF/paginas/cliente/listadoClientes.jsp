@@ -23,15 +23,23 @@
                         <th></th> <!-- Columna vacia por temas de diseño, va el botón de editar registro -->
                         </thead>
                         <tbody>
-                            <c:forEach var="cliente" items="${clientes}"> <%--Ver línea 24 de ServletControlador--%>
+                            <c:forEach var="cliente" items="${clientes}">
                                 <tr>
                                     <td>${cliente.idCliente}</td>
                                     <td>${cliente.nombre} ${cliente.apellido}</td>
                                     <td><fmt:formatNumber value="${cliente.saldo}" type="currency"/></td>
-                                    <td>
+                                    <td class="text-center">
+                                        <a href="${pageContext.request.contextPath}/ServletControlador?accion=encontrar&idCliente=${cliente.idCliente}"
+                                           class="btn btn-info text-white col-md-3">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
                                         <a href="${pageContext.request.contextPath}/ServletControlador?accion=editar&idCliente=${cliente.idCliente}"
-                                           class="btn btn-secondary">
-                                            <i class="fas fa-angle-double-right"></i> Editar
+                                           class="btn btn-secondary col-md-3">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="${pageContext.request.contextPath}/ServletControlador?accion=eliminar&idCliente=${cliente.idCliente}"
+                                           class="btn btn-danger d-none d-sm-inline-block col-0 col-sm-3">
+                                            <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -65,6 +73,6 @@
         </div>
     </div>
 </section>
-                        
+
 <!-- Modal de agregar cliente -->
 <jsp:include page="/WEB-INF/paginas/cliente/agregarCliente.jsp"/>
