@@ -7,7 +7,7 @@ import dominio.Cliente;
 import java.sql.*;
 import java.util.*;
 
-public class ClienteDaoJDBC {
+public class ClienteDaoJDBC implements IClienteDaoJDBC{
 
     private static final String SQL_SELECT = "SELECT id_cliente, nombre, apellido, email, telefono, saldo"
             + " FROM cliente";
@@ -26,6 +26,7 @@ public class ClienteDaoJDBC {
 
     private static final String SQL_DELETE = "DELETE FROM cliente WHERE id_cliente=?";
 
+    @Override
     public List<Cliente> listar() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -57,6 +58,7 @@ public class ClienteDaoJDBC {
         return clientes;
     }
 
+    @Override
     public Cliente encontrar(Cliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -88,6 +90,7 @@ public class ClienteDaoJDBC {
         return cliente;
     }
 
+    @Override
     public List<Cliente> encontrarPorNombre(Cliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -102,12 +105,13 @@ public class ClienteDaoJDBC {
             
             while (rs.next()) {
                 int idCliente = rs.getInt("id_cliente");
+                String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String email = rs.getString("email");
                 String telefono = rs.getString("telefono");
                 double saldo = rs.getDouble("saldo");
                 
-                clienteNuev=new Cliente(idCliente, cliente.getNombre(), apellido,
+                clienteNuev=new Cliente(idCliente, nombre, apellido,
                 email, telefono, saldo);
 
                 clientes.add(clienteNuev);
@@ -124,6 +128,7 @@ public class ClienteDaoJDBC {
     }
 
     //Este método regresara el número de registros afectados
+    @Override
     public int insertar(Cliente cliente) {
         //No se utiliza ResultSet puesto que no se recuperara información
         Connection conn = null;
@@ -148,6 +153,7 @@ public class ClienteDaoJDBC {
         return cant;
     }
 
+    @Override
     public int actualizar(Cliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -172,6 +178,7 @@ public class ClienteDaoJDBC {
         return cant;
     }
 
+    @Override
     public int eliminar(Cliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;

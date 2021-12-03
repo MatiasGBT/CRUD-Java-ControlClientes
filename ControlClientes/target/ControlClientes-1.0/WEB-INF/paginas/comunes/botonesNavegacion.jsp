@@ -6,7 +6,12 @@
                     <i class="fas fa-plus"></i> Agregar cliente
                 </a>
             </div>
-            <div class="col-md-9 d-grid gap-2 mt-2 mt-md-0">
+            <div class="col-md-3 d-grid gap-2 mt-2 mt-md-0">
+                <a href="${pageContext.request.contextPath}/ServletControlador?accion=descargar" class="btn btn-success">
+                    <i class="fas fa-download"></i> Descargar Excel
+                </a>
+            </div>
+            <div class="col-md-6 d-grid gap-2 mt-2 mt-md-0">
                 <form class="d-flex" action="${pageContext.request.contextPath}/ServletControlador?accion=encontrar"
                       method="POST" class="was-validated">
                     <input class="form-control me-2" type="search" placeholder="Buscar por nombre" aria-label="Search"

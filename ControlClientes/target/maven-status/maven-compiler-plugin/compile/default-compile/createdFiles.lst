@@ -1,4 +1,5 @@
 datos\ClienteDaoJDBC.class
 datos\Conexion.class
 web\ServletControlador.class
+archivos\Reporte.class
 dominio\Cliente.class
